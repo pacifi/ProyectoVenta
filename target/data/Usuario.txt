@@ -1,0 +1,2 @@
+U1	davidmp	123456	ADMIN
+U3	eliasmp	123456	VENDEDOR

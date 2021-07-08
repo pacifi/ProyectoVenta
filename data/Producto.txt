@@ -1,0 +1,3 @@
+P1	Manzana verde	C1	Kilos	4.0	0.004	20.0
+P2	Naranja	C1	Kilos	3.5	0.002	30.0
+P3	Gaseosa InkaKola	C3	Unidad	6.0	0.003	24.0
