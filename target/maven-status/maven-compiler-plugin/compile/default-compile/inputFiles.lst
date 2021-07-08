@@ -1,8 +1,12 @@
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/dao/VentaDao.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/util/LeerTeclado.java
+/home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/modelo/Articulo.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/dao/ProductoDao.java
+/home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/modelo/Cliente.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/gui/MainGUI.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/dao/UsuarioDao.java
+/home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/dao/ArticuloDao.java
+/home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/dao/ClienteDao.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/modelo/UsuarioTO.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/modelo/VentaTO.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/data/AppCrud.java
@@ -15,5 +19,6 @@
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/util/ImprimirArreglos.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/util/LeerArchivo.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/arreglos/Transformadas.java
+/home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/util/Constantes.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/app/App.java
 /home/pacifi/IdeaProjects/ProyectoVentasG3/src/main/java/pe/edu/upeu/arreglos/EjemploMatrices.java
