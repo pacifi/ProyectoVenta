@@ -228,6 +228,7 @@ public class VentaDao extends AppCrud {
         VentaDetalleDao ventaDetalleDao = new VentaDetalleDao();
         ventTO = buscarVentaById(idVenta);
         List<VentaDetalleTO> ventaDetalleTOList = ventaDetalleDao.listVetaVentaDetallebyIdVenta(idVenta);
+        // Formetear los decimales a 2 digitos
         DecimalFormat df2 = new DecimalFormat("#.##");
 
 
@@ -254,7 +255,7 @@ public class VentaDao extends AppCrud {
         System.out.println("Igv: \t\t\t" + df2.format(ventTO.getIgv()));
         System.out.println("Total: \t\t\t" + df2.format(ventTO.getPrecioTotal()));
         NumeroLetras numeroLetras = new NumeroLetras();
-        System.out.println("Son " + numeroLetras.convertNumberToLetter(ventTO.precioTotal));
+        System.out.println("Son " + numeroLetras.convertNumberToLetter(df2.format(ventTO.precioTotal)));
         System.out.println("Gracias por Contar con nostros");
 
 
