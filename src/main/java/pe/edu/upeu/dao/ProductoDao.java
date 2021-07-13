@@ -61,20 +61,26 @@ public class ProductoDao extends AppCrud {
         }
     }
 
+
     public ProductoTO buscarProducto(String idProducto) {
         lar = new LeerArchivo("Producto.txt");
         Object[][] dataP = buscarContenido(lar, 0, idProducto);
+        try {
+            ProductoTO productoTO = new ProductoTO();
+            productoTO.setIdProducto(String.valueOf(dataP[0][0]));
+            productoTO.setNombre(String.valueOf(dataP[0][1]));
+            productoTO.setIdCateg(String.valueOf(dataP[0][2]));
+            productoTO.setUnidaMed(String.valueOf(dataP[0][3]));
+            productoTO.setPrecioUnit(Double.valueOf(String.valueOf(dataP[0][4])));
+            productoTO.setPorcentUtil(Double.valueOf(String.valueOf(dataP[0][5])));
+            productoTO.setStock((Double.valueOf(String.valueOf(dataP[0][6]))));
 
-        ProductoTO productoTO = new ProductoTO();
-        productoTO.setIdProducto(String.valueOf(dataP[0][0]));
-        productoTO.setNombre(String.valueOf(dataP[0][1]));
-        productoTO.setIdCateg(String.valueOf(dataP[0][2]));
-        productoTO.setUnidaMed(String.valueOf(dataP[0][3]));
-        productoTO.setPrecioUnit(Double.valueOf(String.valueOf(dataP[0][4])));
-        productoTO.setPorcentUtil(Double.valueOf(String.valueOf(dataP[0][5])));
-        productoTO.setStock((Double.valueOf(String.valueOf(dataP[0][6]))));
+            return productoTO;
+        } catch (Exception e) {
 
-        return productoTO;
+            return null;
+        }
+
 
     }
 

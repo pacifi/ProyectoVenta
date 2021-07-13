@@ -1,6 +1,7 @@
 package pe.edu.upeu.app;
 
 import java.io.Console;
+import java.util.Scanner;
 
 import pe.edu.upeu.dao.*;
 import pe.edu.upeu.gui.*;
@@ -43,8 +44,11 @@ public class App {
                 "\n31=Eliminar Usuario" +
                 "\n4=Registro de Ventas" +
                 "\n5=Reporte de Ventas entre rango de fechas" +
+                "\n51=Ver Comprobante" +
+
                 "\n6=Registrar Cliente" +
                 "\n61=Reportar Cliente" +
+                "\n62=Buscar Cliente" +
                 "\n0=Salir del Programa";
         CategoriaDao daoCat;
         UsuarioDao uDao;
@@ -95,6 +99,11 @@ public class App {
                     venDao = new VentaDao();
                     venDao.reporteVentasPorFechas();
                     break;
+                case 51:
+                    String idVenta = lt.leer("", "Ingrese Id Venta");
+                    VentaDao ventaDao = new VentaDao();
+                    ventaDao.comprobanteVenta(idVenta);
+                    break;
 
                 case 6:
                     clienteDao = new ClienteDao();
@@ -132,7 +141,7 @@ public class App {
         String usuario = lt.leer("", "Ingrese su Usuario:");
         Console cons = System.console();
         System.out.println("Ingrese su clave:");
-        char[] clave = cons.readPassword();
+        char[] clave = cons.readPassword(usuario);
         UsuarioDao uDao = new UsuarioDao();
 
         if (uDao.login(usuario, String.valueOf(clave))) {

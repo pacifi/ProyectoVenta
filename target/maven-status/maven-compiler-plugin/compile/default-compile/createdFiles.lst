@@ -2,9 +2,12 @@ pe/edu/upeu/modelo/CategoriaTO.class
 pe/edu/upeu/dao/ClienteDao.class
 pe/edu/upeu/util/UtilsX.class
 pe/edu/upeu/gui/MainGUI$1.class
+pe/edu/upeu/dao/VentaDetalleDao.class
 pe/edu/upeu/util/LeerTeclado.class
 pe/edu/upeu/dao/ProductoDao.class
 pe/edu/upeu/arreglos/EjemploVectores.class
+pe/edu/upeu/app/App2.class
+pe/edu/upeu/util/NumeroLetras.class
 pe/edu/upeu/arreglos/Transformadas.class
 pe/edu/upeu/util/Constantes.class
 pe/edu/upeu/dao/CategoriaDao.class

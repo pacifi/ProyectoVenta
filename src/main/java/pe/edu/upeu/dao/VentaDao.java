@@ -1,5 +1,6 @@
 package pe.edu.upeu.dao;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,10 +11,7 @@ import pe.edu.upeu.modelo.Cliente;
 import pe.edu.upeu.modelo.ProductoTO;
 import pe.edu.upeu.modelo.VentaDetalleTO;
 import pe.edu.upeu.modelo.VentaTO;
-import pe.edu.upeu.util.Constantes;
-import pe.edu.upeu.util.LeerArchivo;
-import pe.edu.upeu.util.LeerTeclado;
-import pe.edu.upeu.util.UtilsX;
+import pe.edu.upeu.util.*;
 
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
@@ -87,14 +85,30 @@ public class VentaDao extends AppCrud {
         ut.clearConsole();
         System.out.println("*************Agregar Productos a carrito de venta********");
         mostrarProductos();
-        vdTO.setIdProducto(lte.leer("", "Ingrese el ID del Producto:"));
+
         vdTO.setIdVenta(vTO.getIdVenta());
         lar = new LeerArchivo("VentaDetalle.txt");
         vdTO.setIdVentaDetalle(generarId(lar, 0, "DV", 2));
-        lar = new LeerArchivo("Producto.txt");
-        Object[][] dataP = buscarContenido(lar, 0, vdTO.getIdProducto());
-        double porcentUtil = Double.parseDouble(String.valueOf(dataP[0][5]));
-        double punit = Double.parseDouble(String.valueOf(dataP[0][4]));
+//        lar = new LeerArchivo("Producto.txt");
+//        Object[][] dataP = buscarContenido(lar, 0, vdTO.getIdProducto());
+        ProductoDao productoDao = new ProductoDao();
+        // Inicio de Valición
+        do {
+            // Validación de existencia del producto
+            vdTO.setIdProducto(lte.leer("", "Ingrese el ID del Producto:"));
+            // Buscamos produco por IDPRODUCTO usando un metodo de productoDao
+            prodTO = productoDao.buscarProducto(vdTO.getIdProducto());
+            System.out.println(prodTO);
+            if (prodTO == null) {
+                System.out.println("!!!!!!!!!!!!!!!El producto No existe, Intente nuevamente!!!!!");
+            }
+        } while (prodTO == null);
+        // Fin de Valición
+//        double porcentUtil = Double.parseDouble(String.valueOf(dataP[0][5]));
+//        double punit = Double.parseDouble(String.valueOf(dataP[0][4]));
+        double porcentUtil = prodTO.getPorcentUtil();
+        double punit = prodTO.getPrecioUnit();
+        vdTO.setNombreProducto(prodTO.getNombre());
         vdTO.setPorcentUtil(porcentUtil);
         vdTO.setPrecioUnit(punit + punit * porcentUtil);
         vdTO.setCantidad(lte.leer(0.0, "Ingrese una cantidad:"));
@@ -206,6 +220,75 @@ public class VentaDao extends AppCrud {
             System.err.println("Error:" + e.getMessage());
         }
         return lista2.size();
+    }
+
+    public void comprobanteVenta(String idVenta) {
+        // Imprimiendo Comprobante de Venta
+
+        VentaDetalleDao ventaDetalleDao = new VentaDetalleDao();
+        ventTO = buscarVentaById(idVenta);
+        List<VentaDetalleTO> ventaDetalleTOList = ventaDetalleDao.listVetaVentaDetallebyIdVenta(idVenta);
+        DecimalFormat df2 = new DecimalFormat("#.##");
+
+
+        System.out.println(ventTO.getEmpresa());
+        System.out.println("\n\n");
+        System.out.println("" + "RUC: " + ventTO.getRucEmpresa());
+        System.out.println("" + "Dirección: " + ventTO.getDireccionEmpresa());
+        System.out.println("===================================================");
+        System.out.println("Cliente: " + ventTO.getNombreCliente());
+        System.out.println("Documento: " + ventTO.getNumeroDocumentoCliente());
+        System.out.println("Dirección: " + ventTO.getDireccionCliente());
+        System.out.println("===================================================");
+        System.out.println("Comprobante de Venta");
+        System.out.println("Nro: " + ventTO.getSerie() + "-" + ventTO.getNumeroComprobante());
+        System.out.println("Fecha: " + ventTO.getFechaVenta());
+        System.out.println("===================================================");
+        System.out.println("Descripción\t Cant. \t Precio \t Total");
+        System.out.println("===================================================");
+        for (VentaDetalleTO vdto : ventaDetalleTOList) {
+            System.out.println(vdto.getNombreProducto() + "\t" + vdto.getCantidad() + "\t" + df2.format(vdto.getPrecioUnit()) + "\t" + df2.format(vdto.getPrecioTotal()));
+        }
+        System.out.println("===================================================");
+        System.out.println("Base Imponible: " + df2.format(ventTO.getNetoTotal()));
+        System.out.println("Igv: \t\t\t" + df2.format(ventTO.getIgv()));
+        System.out.println("Total: \t\t\t" + df2.format(ventTO.getPrecioTotal()));
+        NumeroLetras numeroLetras = new NumeroLetras();
+        System.out.println("Son " + numeroLetras.convertNumberToLetter(ventTO.precioTotal));
+        System.out.println("Gracias por Contar con nostros");
+
+
+    }
+
+    public VentaTO buscarVentaById(String idVenta) {
+        lar = new LeerArchivo("Venta.txt");
+        Object[][] dataP = buscarContenido(lar, 0, idVenta);
+        try {
+            VentaTO ventaTO = new VentaTO();
+            ventaTO.setIdVenta(String.valueOf(dataP[0][0]));
+            ventaTO.setNumeroDocumentoCliente(String.valueOf(dataP[0][1]));
+
+            ventaTO.setFechaVenta(String.valueOf(dataP[0][2]));
+            ventaTO.setNetoTotal(Double.parseDouble(String.valueOf(dataP[0][3])));
+            ventaTO.setIgv(Double.parseDouble(String.valueOf(dataP[0][4])));
+            ventaTO.setPrecioTotal(Double.parseDouble(String.valueOf(dataP[0][5])));
+            ventaTO.setEmpresa(String.valueOf(dataP[0][6]));
+            ventaTO.setDireccionEmpresa(String.valueOf(dataP[0][7]));
+            ventaTO.setRucEmpresa(String.valueOf(dataP[0][8]));
+            ventaTO.setSerie(String.valueOf(dataP[0][9]));
+            ventaTO.setNumeroComprobante(String.valueOf(dataP[0][10]));
+            ventaTO.setDireccionCliente(String.valueOf(dataP[0][11]));
+            ventaTO.setDniCliente(String.valueOf(dataP[0][12]));
+            ventaTO.setNombreCliente(String.valueOf(dataP[0][13]));
+
+
+            return ventaTO;
+        } catch (Exception e) {
+
+            return null;
+        }
+
+
     }
 
 
