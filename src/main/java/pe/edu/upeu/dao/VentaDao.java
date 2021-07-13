@@ -227,6 +227,13 @@ public class VentaDao extends AppCrud {
 
         VentaDetalleDao ventaDetalleDao = new VentaDetalleDao();
         ventTO = buscarVentaById(idVenta);
+        while (ventTO == null) {
+            System.out.println("La Venta no Existe");
+            idVenta = lte.leer("", "Ingrese Id Venta");
+            ventTO = buscarVentaById(idVenta);
+        }
+
+
         List<VentaDetalleTO> ventaDetalleTOList = ventaDetalleDao.listVetaVentaDetallebyIdVenta(idVenta);
         // Formetear los decimales a 2 digitos
         DecimalFormat df2 = new DecimalFormat("#.##");

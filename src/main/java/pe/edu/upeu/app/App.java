@@ -103,6 +103,7 @@ public class App {
                     String idVenta = lt.leer("", "Ingrese Id Venta");
                     VentaDao ventaDao = new VentaDao();
                     ventaDao.comprobanteVenta(idVenta);
+
                     break;
 
                 case 6:
